@@ -1,7 +1,6 @@
 package emy.backend.lawapp50.app.actor.infrastructure.persistance.entity
 
 import jakarta.persistence.Column
-import java.time.LocalDateTime
 
 abstract class Actor(
     @Column("user_id")
