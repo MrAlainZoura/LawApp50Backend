@@ -39,7 +39,7 @@ dependencies {
 	//data-r2bc
 	implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
 	//security
-//	implementation("org.springframework.boot:spring-boot-starter-security")
+	implementation("org.springframework.boot:spring-boot-starter-security")
 	//thymeleaf
 	implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
 	// reactive
@@ -71,7 +71,7 @@ dependencies {
 	implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
-//	implementation("org.thymeleaf.extras:thymeleaf-extras-spring security6")
+//	implementation("org.thymeleaf.extras:thymeleaf-extras-spring-security6")
 	implementation("tools.jackson.module:jackson-module-kotlin")
 
 	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.6")
@@ -81,7 +81,7 @@ dependencies {
 	runtimeOnly("com.ongres.scram:scram-common:3.2")
 	testImplementation("org.springframework.boot:spring-boot-starter-data-jpa-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-data-r2dbc-test")
-//	testImplementation("org.springframework.boot:spring-boot-starter-security-test")
+	testImplementation("org.springframework.boot:spring-boot-starter-security-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-thymeleaf-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-webflux-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
