@@ -40,6 +40,8 @@ class UserService(
             phone = user.phone,
             pseudo = user.username,
             city = user.city,
+            firstName = user.firstName,
+            lastName = user.lastName
         )
         val savedEntity = repository.save(entityToSave)
         return savedEntity.toDomain()

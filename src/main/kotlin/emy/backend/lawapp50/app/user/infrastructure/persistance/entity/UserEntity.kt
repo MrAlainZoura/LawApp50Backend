@@ -1,9 +1,10 @@
 package emy.backend.lawapp50.app.user.infrastructure.persistance.entity
 
 import com.fasterxml.jackson.annotation.*
-import org.springframework.data.annotation.*
 import org.springframework.data.relational.core.mapping.*
 import java.time.*
+import org.springframework.data.annotation.Id
+import org.springframework.data.relational.core.mapping.Column
 
 @Table(name = "users")
 class UserEntity(
@@ -19,6 +20,8 @@ class UserEntity(
     var email: String? = null,
     @Column("pseudo")
     var pseudo: String? = null,
+    @Column("images")
+    var images: String? = null,
     @Column("is_premium")
     var isPremium: Boolean = false,
     @Column("is_certified")
@@ -27,6 +30,12 @@ class UserEntity(
     var isLock: Boolean = false,
     @Column("phone")
     var phone: String?=null,
+    @Column("first_name")
+    var firstName: String,
+    @Column("last_name")
+    var lastName: String,
+    @Column("full_name")
+    val fullName: String = "$firstName $lastName",
     @Column("created_at")
     val createdAt: LocalDateTime = LocalDateTime.now(),
 )

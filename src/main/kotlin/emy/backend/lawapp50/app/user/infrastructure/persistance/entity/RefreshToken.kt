@@ -1,7 +1,8 @@
 package emy.backend.lawapp50.app.user.infrastructure.persistance.entity
 
-import org.springframework.data.annotation.*
 import org.springframework.data.relational.core.mapping.*
+import org.springframework.data.annotation.Id
+import org.springframework.data.relational.core.mapping.Column
 import java.time.*
 
 @Table(name = "refresh_tokens")

@@ -1,12 +1,17 @@
 package emy.backend.lawapp50.app.user.domain.model
 
 import emy.backend.lawapp50.app.user.domain.model.request.AccountRequest
+import jakarta.persistence.Column
 import jakarta.validation.constraints.*
 import java.time.LocalDateTime
 
 data class User(
     @Null
     val userId: Long = 0,
+    @NotNull
+    var firstName : String,
+    @NotNull
+    var lastName : String,
     @NotNull
     @field:NotBlank(message = "Le mot de passe est obligatoire")
     @field:Size(min = 8, message = "Le mot de passe doit contenir au moins 8 caractères")
@@ -37,6 +42,8 @@ data class UserDto(
     val username: String,
     var phone: String?,
     var city: String,
+    var firstName : String,
+    var lastName : String,
 //    var country : String? = "Democratic Republic of the Congo",
     val isPremium : Boolean,
     var isCertified: Boolean
@@ -54,18 +61,24 @@ data class UserRequest(
     val username : String? = null,
     @NotNull
     val city : String,
+    @NotNull
+    var firstName : String,
+    @NotNull
+    var lastName : String,
 //    @NotNull
 //    val country : String
 )
 
-data class UserAuthRequest(val account : List<AccountRequest>, val user : UserRequest)
+data class UserAuthRequest(val account : List<AccountRequest>?, val user : UserRequest)
 
 fun UserAuthRequest.toDomain() = User(
     password = this.user.password,
     email = this.user.email,
-    username = "@"+this.user.username,
+    username = "@" + this.user.username,
     phone = this.user.phone,
     city = this.user.city,
+    firstName = this.user.firstName,
+    lastName = this.user.lastName,
 //    country = this.user.country,
 )
 data class RefreshRequest(

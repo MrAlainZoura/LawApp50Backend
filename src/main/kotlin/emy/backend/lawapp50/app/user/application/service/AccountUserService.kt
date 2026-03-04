@@ -22,6 +22,7 @@ class AccountUserService(
         val result = repository.save(data)
         return result.toDomain()
     }
+    suspend fun count() = repository.count()
     suspend fun getAll() = repository.findAll().map { it.toDomain() }
     suspend fun findByIdAccount(id : Long): AccountUser {
       val data = repository.findById(id)?: throw ResponseStatusException(HttpStatusCode.valueOf(404), "ID Is Not Found.")

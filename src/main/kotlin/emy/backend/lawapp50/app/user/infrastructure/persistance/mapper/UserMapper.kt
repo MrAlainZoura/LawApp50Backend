@@ -13,6 +13,8 @@ fun UserEntity.toDomain(): UserDto {
         city = entity.city.toString(),
         isPremium = entity.isPremium,
         isCertified = entity.isCertified,
+        firstName = entity.firstName,
+        lastName = entity.lastName
     )
 }
 
@@ -26,6 +28,8 @@ fun UserDto.toEntityToDto(password: String): UserEntity {
         phone = user.phone,
         city = user.city,
         password = password,
+        firstName = user.firstName,
+        lastName = user.lastName,
 //        country = user.country,
         isPremium = user.isPremium,
     )
@@ -39,6 +43,8 @@ fun User.toEntity(): UserEntity {
         pseudo = user.username,
         email = user.email,
         phone = user.phone,
+        firstName = user.firstName,
+        lastName = user.lastName,
         city = user.city,
 //        country = user.country,
     )

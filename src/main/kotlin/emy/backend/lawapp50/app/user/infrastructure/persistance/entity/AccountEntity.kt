@@ -12,7 +12,9 @@ class AccountEntity(
     @Column("name")
     val name: String,
     @Column("type_account_id")
-    val typeAccountId: Long
+    val typeAccountId: Long,
+    @Column("is_active")
+    val isActive: Boolean = true
 )
 data class AccountDTO(
     val id : Long? = null,
