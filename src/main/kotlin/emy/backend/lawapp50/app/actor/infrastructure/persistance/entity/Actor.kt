@@ -4,13 +4,13 @@ import jakarta.persistence.Column
 
 abstract class Actor(
     @Column("user_id")
-    val userId : Long? = null,
+    var userId : Long? = null,
     @Column("first_name")
-    val firstName : String = "",
+    var firstName : String = "",
     @Column("last_name")
-    val lastName : String = "",
+    var lastName : String = "",
     @Column("full_name")
-    val fullName : String = "",
+    var fullName : String = "",
     @Column("gender")
-    val gender : Char? = null,
+    var gender : Char? = null,
 )

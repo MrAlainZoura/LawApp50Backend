@@ -1,17 +1,36 @@
 package emy.backend.lawapp50.app.actor.infrastructure.persistance.entity
 
-import jakarta.persistence.*
+import emy.backend.lawapp50.app.actor.domain.model.Student
+import jakarta.persistence.Column
+import jakarta.persistence.Id
+import org.springframework.data.annotation.*
+import org.springframework.data.relational.core.mapping.*
 
 @Table(name = "students")
 class StudentEntity(
     @Id
     @Column("student_id")
-    val studentId : Long? = null,
+    var studentId : Long? = null,
     @Column("promotion_id")
-    val promotionId : Long? = null,
+    var promotionId : Long? = null,
     @Column("etablissement_id")
-    val etablissementId : Long? = null,
+    var etablissementId : Long? = null,
     @Column("matricule")
-    val matricule : String? = null
-) : Actor()
+    var matricule : String? = null,
+    @Column("user_id")
+    var userId : Long? = null,
+    @Column("gender")
+    var gender : Char? = null,
+)
+
+fun StudentEntity.toDomain() = Student(
+    studentId = this.studentId,
+    promotionId = this.promotionId,
+    etablissementId = this.etablissementId,
+    matricule = this.matricule,
+    userId = this.userId,
+    gender = this.gender
+)
+
+
 
