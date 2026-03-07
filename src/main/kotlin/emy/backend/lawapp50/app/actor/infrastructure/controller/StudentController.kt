@@ -1,17 +1,17 @@
 package emy.backend.lawapp50.app.actor.infrastructure.controller
 
-import emy.backend.lawapp50.app.actor.application.service.StudentService
-import emy.backend.lawapp50.app.actor.domain.model.Student
-import emy.backend.lawapp50.route.actor.StudentScope
-import emy.backend.lawapp50.security.Auth
+import emy.backend.lawapp50.app.actor.application.service.*
+import emy.backend.lawapp50.app.actor.domain.model.*
+import emy.backend.lawapp50.route.actor.*
+import emy.backend.lawapp50.security.*
 import emy.backend.lawapp50.security.monitoring.*
-import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.*
 import jakarta.servlet.http.*
-import jakarta.validation.Valid
-import kotlinx.coroutines.coroutineScope
+import jakarta.validation.*
+import kotlinx.coroutines.*
 import org.slf4j.*
-import org.springframework.context.annotation.Profile
-import org.springframework.http.MediaType
+import org.springframework.context.annotation.*
+import org.springframework.http.*
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -35,8 +35,8 @@ class StudentController(
                     startNanos = startNanos,
                     status = "200",
                     route = "${request.method} /${request.requestURI}",
-                    countName = "api.account.getallaccounte.count",
-                    distributionName = "api.account.getallaccounte.latency"
+                    countName = "api.account.getallStudent.count",
+                    distributionName = "api.account.getallStudent.latency"
                 )
             )
         }
@@ -46,17 +46,19 @@ class StudentController(
     @PostMapping("/{version}/${StudentScope.PRIVATE}",produces = [MediaType.APPLICATION_JSON_VALUE])
     suspend fun createStudent(request: HttpServletRequest, @Valid @RequestBody data: Student) = coroutineScope {
         val startNanos = System.nanoTime()
+        val userConnect = auth.user()
         try {
+            data.studentId = userConnect?.first?.userId
             val student = service.create(data)
-//            mapOf("accounts" to service.getAll().toList())
+
         } finally {
             sentry.callToMetric(
                 MetricModel(
                     startNanos = startNanos,
                     status = "200",
                     route = "${request.method} /${request.requestURI}",
-                    countName = "api.account.getallaccounte.count",
-                    distributionName = "api.account.getallaccounte.latency"
+                    countName = "api.account.createStudent.count",
+                    distributionName = "api.account.createStudent.latency"
                 )
             )
         }

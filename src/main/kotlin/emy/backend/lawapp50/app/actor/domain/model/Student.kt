@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Null
 
 data class Student(
     @Null
-    val studentId: Long?,
+    var studentId: Long?,
     val promotionId: Long? = null,
     val etablissementId: Long? = null,
     @Null
