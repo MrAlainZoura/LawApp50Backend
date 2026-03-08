@@ -4,6 +4,7 @@ import emy.backend.lawapp50.app.user.application.service.*
 import emy.backend.lawapp50.app.user.domain.model.UserDto
 import emy.backend.lawapp50.app.user.infrastructure.persistance.mapper.toDomain
 import emy.backend.lawapp50.app.user.infrastructure.persistance.repository.*
+import kotlinx.coroutines.flow.count
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 
@@ -20,7 +21,10 @@ class Auth(
         SecurityContextHolder.getContext().authentication?.name?.let {
             val userId = it.toInt(16).toLong()
             val data = repository.findById(userId)
-            mutlipleAccount.findMultipleAccountUser(userId).forEach{c->allowList.add(account.isAllow(c.accountId))}
+//            if(mutlipleAccount.getAll().count().toInt() != 0){
+            mutlipleAccount.findMultipleAccountUser(userId).forEach{
+                c->allowList.add(account.isAllow(c.accountId))
+            }
             return Pair(data?.toDomain(),allowList)
         }
         return null
