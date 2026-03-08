@@ -1,25 +1,24 @@
 package emy.backend.lawapp50.app.actor.infrastructure.persistance.entity
 
 import emy.backend.lawapp50.app.actor.domain.model.Teacher
-import jakarta.persistence.Column
-import jakarta.persistence.Id
+
 import org.springframework.data.annotation.*
 import org.springframework.data.relational.core.mapping.*
 
 @Table(name="teachers")
 class TeacherEntity (
     @Id
-    @Column(name = "teacher_id")
+    @Column("teacher_id")
     val teacherId: Long?,
-    @Column(name = "matricule")
+    @Column("matricule")
     val matricule: String?,
-    @Column(name = "type_teacher_id")
+    @Column("type_teacher_id")
     val typeTeacherId: Long?,
-    @Column(name = "departement")
+    @Column("departement")
     val departement: String?,
-    @Column(name = "justificatif")
+    @Column("justificatif")
     val justificatif: String,
-    @Column(name = "faculte_id")
+    @Column("faculte_id")
     val faculteId: Long,
     @Column("user_id")
     var userId : Long? = null,

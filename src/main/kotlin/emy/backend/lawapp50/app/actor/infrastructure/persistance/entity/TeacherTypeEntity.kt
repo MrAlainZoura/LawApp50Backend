@@ -1,6 +1,7 @@
 package emy.backend.lawapp50.app.actor.infrastructure.persistance.entity
 
-import jakarta.persistence.*
+import org.springframework.data.annotation.*
+import org.springframework.data.relational.core.mapping.*
 
 @Table(name = "teacher_types")
 class TeacherTypeEntity(
