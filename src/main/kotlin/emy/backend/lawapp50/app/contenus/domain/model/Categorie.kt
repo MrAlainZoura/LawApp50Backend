@@ -1,5 +1,6 @@
 package emy.backend.lawapp50.app.contenus.domain.model
 
+import jakarta.validation.constraints.NotNull
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Column
 
@@ -10,5 +11,6 @@ data class Categorie(
 )
 
 data class CategorieRequest(
+    @NotNull
     var name: String
 )
