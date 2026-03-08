@@ -10,10 +10,13 @@ import io.swagger.v3.oas.annotations.Operation
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.validation.Valid
 import kotlinx.coroutines.coroutineScope
+import org.springframework.context.annotation.Profile
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
 
 @RestController
+@RequestMapping
+@Profile("dev")
 class CategorieController (
     private val s: CategorieService,
     private val sentry : SentryService
