@@ -49,15 +49,15 @@ class ContenuController(
             val createContenu = s.create(data)
 
             val scope = rData.scope
-            val dataScopeContenu = scope.map{
-                 ScopeContenuEntity(
+            val dataScopeContenu = scope?.map{
+                ScopeContenuEntity(
                     scopeId = it?.id!!,
                     contenuId = createContenu.id!!,
                     isActive = true
                 )
-            }.toList()
-            val saveScopeContenu = dataScopeContenu.map{ scop.save(it) }
-            mapOf("contenu" to createContenu)
+            }?.toList()
+            val saveScopeContenu = dataScopeContenu?.map{ scop.save(it) }
+            mapOf("contenu" to s.toDtoEntity( createContenu))
         } finally {
             sentry.callToMetric(
                 MetricModel(

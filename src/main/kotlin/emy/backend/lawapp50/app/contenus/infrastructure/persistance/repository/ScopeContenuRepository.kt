@@ -8,6 +8,6 @@ import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 import org.springframework.data.repository.query.Param
 
 interface ScopeContenuRepository : CoroutineCrudRepository<ScopeContenuEntity, Long>{
-    @Query("SELECT * FROM scope_contenus WHERE contenu_id = :contenuId AND scope_id = :scopeId")
-    fun findScopeContenu(@Param("contenuId") contenuId: Long, @Param("scopeId") scopeId: Long): Flow<ScopeContenuEntity>?
+    @Query("SELECT * FROM scope_contenus WHERE contenu_id = :contenuId ")
+    fun findScopeContenu(@Param("contenuId") contenuId: Long): Flow<ScopeContenuEntity>?
 }
