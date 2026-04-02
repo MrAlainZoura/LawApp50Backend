@@ -38,6 +38,7 @@ class JwtAuthFilter(
             "/v3/**",
             "/files/**",
             "/auth/login",
+            "/api/auth/google",
             "/auth/register",
             "/websocket/**"
         ) // ← IMPORTANT: WebSocket doit être public pour le handshake)

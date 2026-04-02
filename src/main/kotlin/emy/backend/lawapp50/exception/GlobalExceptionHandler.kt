@@ -8,24 +8,27 @@ import org.springframework.http.*
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
+import tools.jackson.databind.exc.MismatchedInputException
+import tools.jackson.module.kotlin.KotlinInvalidNullException
 import java.time.LocalDateTime
+import kotlin.collections.forEach
 
 @ControllerAdvice
 @Profile(Mode.DEV)
 class GlobalExceptionHandler {
     private val logger = LoggerFactory.getLogger(this::class.java)
-    @ExceptionHandler(Exception::class)
-    fun handleGenericException(e : Exception): ResponseEntity<ErrorResponseDto>{
-        logger.error("Handle exception", e)
-        val errorDto = ErrorResponseDto(
-            "Internal server error",
-            e.message.toString(),
-            LocalDateTime.now()
-        )
-        return ResponseEntity
-            .status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .body(errorDto)
-    }
+//    @ExceptionHandler(Exception::class)
+//    fun handleGenericException(e : Exception): ResponseEntity<ErrorResponseDto>{
+//        logger.error("Handle exception", e)
+//        val errorDto = ErrorResponseDto(
+//            "Internal server error",
+//            e.message.toString(),
+//            LocalDateTime.now()
+//        )
+//        return ResponseEntity
+//            .status(HttpStatus.INTERNAL_SERVER_ERROR)
+//            .body(errorDto)
+//    }
 
     @ExceptionHandler(value = [ResponseStatusException::class])
     fun handleStatusException(e:ResponseStatusException): ResponseEntity<MutableMap<String, Any>>{
@@ -58,9 +61,7 @@ class GlobalExceptionHandler {
     fun handleBadRequest(e : MethodArgumentNotValidException) : ResponseEntity<MutableMap<String, Any>> {
         logger.error("Handle handleBadRequest", e)
         val map = mutableMapOf<String, Any>()
-        e.bindingResult.fieldErrors.forEach { error->
-            map[error.field] = error.defaultMessage ?: "Validation"
-        }
+        e.bindingResult.fieldErrors.forEach { error-> map[error.field] = error.defaultMessage ?: "Validation" }
         val mapList = mutableMapOf<String, Any>()
         map.forEach { (p0, p1) ->
             mapList["message"] = p1
@@ -70,4 +71,10 @@ class GlobalExceptionHandler {
             .body(mapList)
     }
 
+    @ExceptionHandler(value = [MismatchedInputException::class, KotlinInvalidNullException::class])
+    fun handleBadRequest2(e: KotlinInvalidNullException): ResponseEntity<ErrorResponseMessageDto> {
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(ErrorResponseMessageDto("Ce champs ne peut pas être ${e.propertyName} null"))
+    }
 }

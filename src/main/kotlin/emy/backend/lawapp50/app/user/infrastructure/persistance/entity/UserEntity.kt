@@ -36,6 +36,10 @@ class UserEntity(
     var lastName: String,
     @Column("full_name")
     val fullName: String = "$firstName $lastName",
+    @Column("from_service")
+    var fromService : String? = null,
+    @Column("is_valid")
+    var isValid: Boolean = false,
     @Column("created_at")
     val createdAt: LocalDateTime = LocalDateTime.now(),
 )

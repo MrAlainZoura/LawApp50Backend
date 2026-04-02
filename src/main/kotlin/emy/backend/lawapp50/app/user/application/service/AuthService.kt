@@ -5,6 +5,7 @@ import emy.backend.lawapp50.app.actor.application.service.TeacherService
 import emy.backend.lawapp50.app.user.domain.model.*
 import emy.backend.lawapp50.app.user.infrastructure.persistance.entity.*
 import emy.backend.lawapp50.app.user.domain.model.request.AccountRequest
+import emy.backend.lawapp50.app.user.domain.model.request.VerifyRequest
 import emy.backend.lawapp50.app.user.infrastructure.persistance.mapper.toDomain
 import emy.backend.lawapp50.app.user.infrastructure.persistance.repository.*
 import kotlinx.coroutines.coroutineScope
@@ -25,9 +26,8 @@ import emy.backend.lawapp50.app.user.infrastructure.persistance.repository.Refre
 import emy.backend.lawapp50.security.*
 import emy.backend.lawapp50.utils.isEmailValid
 import emy.backend.lawapp50.utils.normalizeAndValidatePhoneNumberUniversal
+import server.web.casa.adaptater.provide.twilio.TwilioService
 
-//sudo docker run --name casa-db -e POSTGRES_PASSWORD=root -e POSTGRES_DB=testdb e- POSTGRES_USERNAME=postgres -p 5434:5432 -d postgres
-//https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-22-04
 @Service
 @Profile(Mode.DEV)
 class AuthService(
@@ -35,13 +35,12 @@ class AuthService(
     private val userRepository: UserRepository,
     private val hashEncoder: HashEncoder,
     private val refreshTokenRepository: RefreshTokenRepository,
-//    private val twilio : TwilioService,
     private val serviceMultiAccount: AccountUserService,
     private val typeAccountService: TypeAccountService,
     private val accountService: AccountService,
     private val student : StudentService,
-    private val teacher : TeacherService
-
+    private val teacher : TeacherService,
+//    private val twilio : TwilioService,
     ) {
     private val log = LoggerFactory.getLogger(this::class.java)
     data class TokenPair(
@@ -49,7 +48,7 @@ class AuthService(
         val refreshToken: String
     )
     @OptIn(ExperimentalTime::class)
-    suspend fun register(user: User, accountItems: List<AccountRequest>?): Pair<UserDto?, String> {
+    suspend fun register(user: User): UserDto {
         var phone = ""
         var state = false
         if (user.phone != null) {
@@ -65,7 +64,7 @@ class AuthService(
                 state = true
             }
         }
-        if (!state) throw ResponseStatusException(HttpStatus.CONFLICT, "Vous devez renseigner l'email ou le phone.")
+        if (!state) throw ResponseStatusException(HttpStatus.CONFLICT, "Vous devez renseigner l'email")
         val entity = UserEntity(
             password = hashEncoder.encode(user.password),
             email = user.email,
@@ -77,22 +76,19 @@ class AuthService(
         )
         log.info("Creating user ${user.userId}")
         val savedEntity = userRepository.save(entity)
-        if (accountItems?.isNotEmpty() == true){
-            serviceMultiAccount.save(
-                    AccountUser(userId = savedEntity.userId!!, accountId =accountItems[0].typeAccount)
-                )
-//            }
-        }
-        val newAccessToken = jwtService.generateAccessToken(savedEntity.userId!!.toHexString())
+//        if (accountItems?.isNotEmpty() == true){
+//            serviceMultiAccount.save(AccountUser(userId = savedEntity.userId!!, accountId =accountItems[0].typeAccount))
+//        }
+//        val newAccessToken = jwtService.generateAccessToken(savedEntity.userId!!.toHexString())
         val userData : UserDto = savedEntity.toDomain()
-        val result = Pair(userData,newAccessToken)
-        return result
+        return userData
     }
     suspend fun login(identifier: String, password: String): Pair<TokenPair, UserFullDTO>  =
         coroutineScope {
             var validIdentifier = identifier
             if (isEmailValid(identifier)) validIdentifier = identifier
             val user = userRepository.findByPhoneOrEmail(validIdentifier) ?: throw ResponseStatusException(HttpStatusCode.valueOf(403), "Invalid credentials.")
+            if (!user.isValid) throw ResponseStatusException(HttpStatusCode.valueOf(403), "Ce compte n'est pas vérifier.")
             if(!hashEncoder.matches(password, user.password.toString())) throw ResponseStatusException(HttpStatusCode.valueOf(403), "Invalid credentials.")
             log.info("Logging into user ${user.userId}")
             val newAccessToken = jwtService.generateAccessToken(user.userId!!.toHexString())
@@ -180,10 +176,10 @@ class AuthService(
         val user = userRepository.findById(userId.toLong()) ?: throw ResponseStatusException(HttpStatusCode.valueOf(403), "Invalid refresh token.")
         val hashed = hashToken(refreshToken)
         refreshTokenRepository.findByUserIdAndHashedToken(user.userId!!, hashed) ?: throw ResponseStatusException(HttpStatusCode.valueOf(403), "Refresh token not recognized (maybe used or expired?)")
-        refreshTokenRepository.deleteByUserIdAndHashedToken(user.userId!!, hashed)
+        refreshTokenRepository.deleteByUserIdAndHashedToken(user.userId, hashed)
         val newAccessToken = jwtService.generateAccessToken(userId)
         val newRefreshToken = jwtService.generateRefreshToken(userId)
-        storeRefreshToken(user.userId!!, newRefreshToken)
+        storeRefreshToken(user.userId, newRefreshToken)
         return TokenPair(accessToken = newAccessToken, refreshToken = newRefreshToken)
     }
     @OptIn(ExperimentalTime::class)

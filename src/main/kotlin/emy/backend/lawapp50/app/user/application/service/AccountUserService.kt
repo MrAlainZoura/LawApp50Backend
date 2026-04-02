@@ -36,4 +36,8 @@ class AccountUserService(
 //      if (data.isEmpty()) throw ResponseStatusException(HttpStatus.NOT_FOUND, "Ce compte et type ne sont pas prise en charge.")
 //      return data.first().toDomain()
 //    }
+suspend fun findAccount(account: Long,userId: Long){
+    repository
+        .findByUserAndAccount(userId,account)?:throw ResponseStatusException(HttpStatus.NOT_FOUND, "Vous n'etes pas autorisé à effectuer cette action !!.")
+}
 }

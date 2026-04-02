@@ -34,6 +34,14 @@ extra["springCloudGcpVersion"] = "7.3.1"
 extra["springCloudVersion"] = "2025.0.0"
 extra["sentryVersion"] = "8.27.0"
 dependencies {
+    //twilio
+    implementation("com.twilio.sdk:twilio:9.2.1")
+    // Redis
+    implementation("org.springframework.boot:spring-boot-starter-session-data-redis")
+    // sender mail
+    implementation("org.springframework.boot:spring-boot-starter-mail")
+    //OAUTH2-CLIENT
+    implementation("org.springframework.boot:spring-boot-starter-security-oauth2-client")
 	//data-jpa
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	//data-r2bc
@@ -54,7 +62,7 @@ dependencies {
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.13")
 	// jwt
 	implementation("io.jsonwebtoken:jjwt-api:0.12.6")
-	//
+	//r2dbc
 	implementation("io.r2dbc:r2dbc-pool:1.0.2.RELEASE")
 	implementation("org.postgresql:r2dbc-postgresql:1.1.1.RELEASE")
 	// flyway
@@ -81,8 +89,17 @@ dependencies {
 	runtimeOnly("org.flywaydb:flyway-database-postgresql:11.19.0")
 	runtimeOnly("com.ongres.scram:scram-common:3.2")
    // developmentOnly("org.springframework.boot:spring-boot-docker-compose")
+    // TEST OAUTH
+    testImplementation("org.springframework.boot:spring-boot-starter-security-oauth2-client-test")
+    // TEST MAIL
+    testImplementation("org.springframework.boot:spring-boot-starter-mail-test")
+    // TEST FLYWAY
     testImplementation("org.springframework.boot:spring-boot-starter-flyway-test")
+    // TEST JPA
 	testImplementation("org.springframework.boot:spring-boot-starter-data-jpa-test")
+    // redis
+    testImplementation("org.springframework.boot:spring-boot-starter-session-data-redis-test")
+    // TEST r2dbc
 	testImplementation("org.springframework.boot:spring-boot-starter-data-r2dbc-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-security-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-thymeleaf-test")
