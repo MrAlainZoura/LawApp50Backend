@@ -16,6 +16,7 @@ data class IdentifiantRequest(
     val identifier : String,
 )
 
+
 data class VerifyRequest(
     @NotNull
     val identifier : String,

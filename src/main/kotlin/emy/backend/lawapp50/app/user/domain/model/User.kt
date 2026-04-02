@@ -3,6 +3,7 @@ package emy.backend.lawapp50.app.user.domain.model
 import emy.backend.lawapp50.app.user.domain.model.request.AccountRequest
 import jakarta.persistence.Column
 import jakarta.validation.constraints.*
+import net.minidev.json.annotate.JsonIgnore
 import java.time.LocalDateTime
 
 data class User(
@@ -22,8 +23,6 @@ data class User(
     val username: String? = null,
     val phone: String? = null,
     val city: String = "",
-//    @NotNull
-//    val country : String,
     @FutureOrPresent
     @Null
     val createdStart: LocalDateTime? = LocalDateTime.now()
@@ -44,41 +43,44 @@ data class UserDto(
     var city: String,
     var firstName : String,
     var lastName : String,
-//    var country : String? = "Democratic Republic of the Congo",
     val isPremium : Boolean,
     var isCertified: Boolean
 )
 
 data class UserRequest(
-//    @field:NotBlank(message = "Le phone est obligatoire")
-//    @field:Size(min = 8, message = "Ce numero est invalide car il ne respecte pas le nommage")
-    val phone : String? = null,
-    @NotNull
+    @field:NotBlank(message = "L'email est obligatoire")
+    val email : String? = null,
+    @NotNull(message = "Le mot de passe est obligatoire")
     @field:NotBlank(message = "Le mot de passe est obligatoire")
     @field:Size(min = 6, message = "Le mot de passe doit contenir au moins 8 caractères")
     val password : String,
-    val email : String? = null,
-    val username : String? = null,
+    @NotNull
+    val confirmPassword: String,
+    val pseudo : String? = null,
+    val phone : String? = null,
     @NotNull
     val city : String,
     @NotNull
+    @field:NotBlank(message = "Le nom est obligatoire")
     var firstName : String,
     @NotNull
+    @field:NotBlank(message = "Le prenom est obligatoire")
     var lastName : String,
-//    @NotNull
-//    val country : String
 )
 
-data class UserAuthRequest(val account : List<AccountRequest>?, val user : UserRequest)
+data class UserAuthRequest(
+//    val account : List<AccountRequest>?,
+    val user : UserRequest
+)
 
-fun UserAuthRequest.toDomain() = User(
-    password = this.user.password,
-    email = this.user.email,
-    username = "@" + this.user.username,
-    phone = this.user.phone,
-    city = this.user.city,
-    firstName = this.user.firstName,
-    lastName = this.user.lastName,
+fun UserRequest.toDomain() = User(
+    password = this.password,
+    email = this.email,
+    username = "@" + this.pseudo,
+    phone = this.phone,
+    city = this.city,
+    firstName = this.firstName,
+    lastName = this.lastName,
 //    country = this.user.country,
 )
 data class RefreshRequest(

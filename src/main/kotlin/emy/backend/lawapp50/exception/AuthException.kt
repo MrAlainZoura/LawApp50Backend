@@ -1,13 +1,13 @@
 package emy.backend.lawapp50.exception
 
-import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.*
 import jakarta.servlet.http.*
-import org.springframework.security.access.AccessDeniedException
-import org.springframework.security.core.AuthenticationException
-import org.springframework.security.web.AuthenticationEntryPoint
-import org.springframework.security.web.access.AccessDeniedHandler
-import org.springframework.stereotype.Component
-import java.io.IOException
+import org.springframework.security.access.*
+import org.springframework.security.core.*
+import org.springframework.security.web.*
+import org.springframework.security.web.access.*
+import org.springframework.stereotype.*
+import java.io.*
 
 @Component
 class CustomAuthEntryPoint : AuthenticationEntryPoint {
@@ -17,16 +17,14 @@ class CustomAuthEntryPoint : AuthenticationEntryPoint {
         response: HttpServletResponse,
         authException: AuthenticationException
     ) {
-        response.setContentType("application/json")
-        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED)
-
+        response.contentType = "application/json"
+        response.status = HttpServletResponse.SC_UNAUTHORIZED
         val body: MutableMap<String?, Any?> = HashMap<String?, Any?>()
-        body.put("status", 401)
-        body.put("error", "Unauthorized")
-        body.put("message", "Accès refusé : token invalide ou manquant.")
-        body.put("path", request.getServletPath())
-
-        ObjectMapper().writeValue(response.getOutputStream(), body)
+        body["status"] = 401
+        body["error"] = "Unauthorized"
+        body["message"] = "Accès refusé : token invalide ou manquant."
+        body["path"] = request.servletPath
+        ObjectMapper().writeValue(response.outputStream, body)
     }
 }
 
@@ -39,14 +37,13 @@ class CustomAccessDeniedHandler : AccessDeniedHandler {
         response: HttpServletResponse,
         accessDeniedException:  AccessDeniedException
     ) {
-        response.setContentType("application/json")
-        response.setStatus(HttpServletResponse.SC_FORBIDDEN)
-
+        response.contentType = "application/json"
+        response.status = HttpServletResponse.SC_FORBIDDEN
         val body: MutableMap<String?, Any?> = HashMap<String?, Any?>()
-        body.put("status", 403)
-        body.put("error", "Forbidden")
-        body.put("message", "Accès interdit : vous n'avez pas les autorisations nécessaires.")
-        body.put("path", request.getServletPath())
-        ObjectMapper().writeValue(response.getOutputStream(), body)
+        body["status"] = 403
+        body["error"] = "Forbidden"
+        body["message"] = "Accès interdit : vous n'avez pas les autorisations nécessaires."
+        body["path"] = request.servletPath
+        ObjectMapper().writeValue(response.outputStream, body)
     }
 }
