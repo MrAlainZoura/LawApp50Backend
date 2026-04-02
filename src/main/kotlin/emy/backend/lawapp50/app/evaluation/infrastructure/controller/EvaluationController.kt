@@ -1,4 +1,4 @@
-package server.web.casa.app.user.infrastructure.controller
+package emy.backend.lawapp50.app.evaluation.infrastructure.controller
 
 import emy.backend.lawapp50.app.evaluation.application.service.*
 import emy.backend.lawapp50.app.evaluation.domain.request.*
@@ -12,12 +12,14 @@ import org.springframework.http.*
 import org.springframework.web.bind.annotation.*
 import emy.backend.lawapp50.security.monitoring.*
 import emy.backend.lawapp50.utils.Response.RESSOURCE_NOT_ALLOW
+import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.servlet.http.*
 import jakarta.validation.*
 import org.springframework.web.server.ResponseStatusException
 
+@Tag(name = "Evaluation", description = "Gestion des evaluations")
 @RestController
-@RequestMapping("api")
+@RequestMapping
 @Profile("dev")
 class EvaluationController(
     private val service: EvaluationService,
@@ -37,6 +39,7 @@ class EvaluationController(
             if (account.isNotEmpty()){
                 if (account[0].accountId == 3L){
                     val state = service.create(data.toDomain(session?.first?.userId!!))
+
                 }
                 else{
                     ResponseStatusException(HttpStatusCode.valueOf(403), "$RESSOURCE_NOT_ALLOW, vous n'êtes pas enseignant.")
@@ -75,4 +78,6 @@ class EvaluationController(
             )
         }
     }
+
+
 }
