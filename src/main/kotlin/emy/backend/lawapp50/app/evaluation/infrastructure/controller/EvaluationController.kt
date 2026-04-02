@@ -3,7 +3,7 @@ package server.web.casa.app.user.infrastructure.controller
 import emy.backend.lawapp50.app.evaluation.application.service.*
 import emy.backend.lawapp50.app.evaluation.domain.request.*
 import emy.backend.lawapp50.app.user.application.service.*
-import emy.backend.lawapp50.route.tp.*
+import emy.backend.lawapp50.route.evaluation.*
 import emy.backend.lawapp50.security.*
 import io.swagger.v3.oas.annotations.*
 import kotlinx.coroutines.*
@@ -25,8 +25,8 @@ class EvaluationController(
     private val sentry: SentryService,
     private val auth: Auth,
 ) {
-    @Operation(summary = "Création de TP")
-    @PostMapping("/{version}/${TpScope.PRIVATE}", consumes = [MediaType.APPLICATION_JSON_VALUE])
+    @Operation(summary = "Création de la session d'evaluation")
+    @PostMapping("/{version}/${EvaluationScope.PRIVATE}", consumes = [MediaType.APPLICATION_JSON_VALUE])
     suspend fun createSessionEvaluation(
         request : HttpServletRequest,
         @Valid @RequestBody data : EvaluationRequest) = coroutineScope {
@@ -56,8 +56,9 @@ class EvaluationController(
             )
         }
     }
+
     @Operation(summary = "Liste des evaluations")
-    @GetMapping("/{version}/${TpScope.PUBLIC}",produces = [MediaType.APPLICATION_JSON_VALUE])
+    @GetMapping("/{version}/${EvaluationScope.PUBLIC}",produces = [MediaType.APPLICATION_JSON_VALUE])
     suspend fun getAllEvaluation(request: HttpServletRequest) = coroutineScope {
         val startNanos = System.nanoTime()
         try {
