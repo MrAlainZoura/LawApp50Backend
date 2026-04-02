@@ -2,7 +2,7 @@ package emy.backend.lawapp50.app.actor.infrastructure.controller
 
 import emy.backend.lawapp50.app.actor.application.service.*
 import emy.backend.lawapp50.app.actor.domain.model.*
-import emy.backend.lawapp50.app.school_ecosystem.infrastructure.persistance.repository.*
+import emy.backend.lawapp50.app.evaluation.infrastructure.persistance.repository.*
 import emy.backend.lawapp50.app.user.application.service.AccountUserService
 import emy.backend.lawapp50.app.user.domain.model.AccountUser
 import emy.backend.lawapp50.route.actor.*

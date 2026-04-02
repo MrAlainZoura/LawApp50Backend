@@ -1,11 +1,7 @@
 package emy.backend.lawapp50.app.actor.domain.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import emy.backend.lawapp50.app.actor.infrastructure.persistance.entity.Actor
 import emy.backend.lawapp50.app.actor.infrastructure.persistance.entity.TeacherEntity
-import emy.backend.lawapp50.app.school_ecosystem.domain.model.Etablissement
-import jakarta.persistence.Column
-import jakarta.validation.constraints.Null
 
 data class Teacher(
     val teacherId : Long?,

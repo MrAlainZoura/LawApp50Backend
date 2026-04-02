@@ -4,10 +4,10 @@ import emy.backend.lawapp50.app.actor.domain.model.*
 import emy.backend.lawapp50.app.actor.infrastructure.persistance.entity.toDomain
 import emy.backend.lawapp50.app.actor.infrastructure.persistance.repository.TeacherEtablissementRepository
 import emy.backend.lawapp50.app.actor.infrastructure.persistance.repository.TeacherRepository
-import emy.backend.lawapp50.app.school_ecosystem.domain.model.Etablissement
-import emy.backend.lawapp50.app.school_ecosystem.infrastructure.persistance.entity.toDomain
-import emy.backend.lawapp50.app.school_ecosystem.infrastructure.persistance.repository.EtablissementRepository
-import emy.backend.lawapp50.app.school_ecosystem.infrastructure.persistance.repository.FaculteRepository
+import emy.backend.lawapp50.app.evaluation.domain.model.Etablissement
+import emy.backend.lawapp50.app.evaluation.infrastructure.persistance.entity.toDomain
+import emy.backend.lawapp50.app.evaluation.infrastructure.persistance.repository.EtablissementRepository
+import emy.backend.lawapp50.app.evaluation.infrastructure.persistance.repository.FaculteRepository
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.map
 import org.springframework.http.HttpStatus

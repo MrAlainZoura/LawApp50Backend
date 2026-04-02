@@ -1,0 +1,8 @@
+package emy.backend.lawapp50.app.evaluation.infrastructure.persistance.repository
+
+import emy.backend.lawapp50.app.evaluation.infrastructure.persistance.entity.QuestionEntity
+import org.springframework.data.repository.kotlin.CoroutineCrudRepository
+
+interface QuestionRepository  : CoroutineCrudRepository<QuestionEntity, Long>{
+
+}
