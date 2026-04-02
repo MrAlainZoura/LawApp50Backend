@@ -1,14 +1,13 @@
 package emy.backend.lawapp50.app.contenus.application.service
 
-import ScopeRepository
 import emy.backend.lawapp50.app.contenus.infrastructure.persistance.entity.ScopeEntity
-import kotlinx.coroutines.flow.firstOrNull
+import emy.backend.lawapp50.app.contenus.infrastructure.persistance.repository.ScopeRepository
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toList
 import org.springframework.stereotype.Service
 
 @Service
-class ScopeService(private  val r:ScopeRepository) {
+class ScopeService(private  val r: ScopeRepository) {
     suspend fun create(c: ScopeEntity): ScopeEntity{
         return r.save(c)
     }

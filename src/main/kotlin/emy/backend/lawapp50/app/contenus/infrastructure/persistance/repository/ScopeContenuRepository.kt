@@ -1,6 +1,5 @@
 package emy.backend.lawapp50.app.contenus.infrastructure.persistance.repository
 
-import emy.backend.lawapp50.app.contenus.infrastructure.persistance.entity.FavorisContenusEntity
 import emy.backend.lawapp50.app.contenus.infrastructure.persistance.entity.ScopeContenuEntity
 import kotlinx.coroutines.flow.Flow
 import org.springframework.data.r2dbc.repository.Query
