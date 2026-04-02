@@ -17,6 +17,7 @@ import org.springframework.context.annotation.*
 import org.springframework.http.*
 import org.springframework.web.bind.annotation.*
 
+/*
 @RestController
 @RequestMapping
 @Profile("dev")
@@ -85,3 +86,4 @@ class StudentController(
         }
     }
 }
+ */
