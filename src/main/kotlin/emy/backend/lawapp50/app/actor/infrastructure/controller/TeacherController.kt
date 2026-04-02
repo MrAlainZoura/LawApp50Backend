@@ -27,8 +27,6 @@ class TeacherController(
     private val account : AccountUserService,
     private val auth: Auth,
     private val sentry : SentryService,
-    private val etablissementRepository: EtablissementRepository,
-    private val promotionRepository: PromotionRepository,
     private val teacherEtablissementRepository: TeacherEtablissementRepository
 ) {
     private val log = LoggerFactory.getLogger(this::class.java)
