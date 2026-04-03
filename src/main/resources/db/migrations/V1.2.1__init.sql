@@ -62,44 +62,44 @@ CREATE TABLE IF NOT EXISTS public.questions (
         ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS public.question_options (
-    id BIGSERIAL PRIMARY KEY,
-    question_id BIGINT NOT NULL,
-    option TEXT NOT NULL,
-    is_valid BOOLEAN DEFAULT FALSE,
-    is_active BOOLEAN DEFAULT TRUE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT fk_option_question
-        FOREIGN KEY (question_id)
-        REFERENCES public.questions(id)
-        ON DELETE CASCADE
-);
-
-CREATE TABLE IF NOT EXISTS public.question_ouvertes (
-    id BIGSERIAL PRIMARY KEY,
-    question_id BIGINT NOT NULL,
-    title TEXT NOT NULL,
-    file_content TEXT,
-    is_active BOOLEAN DEFAULT TRUE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT fk_question_ouverte
-        FOREIGN KEY (question_id)
-        REFERENCES public.questions(id)
-        ON DELETE CASCADE
-);
-
-CREATE TABLE IF NOT EXISTS public.question_case_studys (
-    id BIGSERIAL PRIMARY KEY,
-    question_id BIGINT NOT NULL,
-    title TEXT NOT NULL,
-    file_content TEXT,
-    is_active BOOLEAN DEFAULT TRUE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT fk_case_study_question
-        FOREIGN KEY (question_id)
-        REFERENCES public.questions(id)
-        ON DELETE CASCADE
-);
+--CREATE TABLE IF NOT EXISTS public.question_options (
+--    id BIGSERIAL PRIMARY KEY,
+--    question_id BIGINT NOT NULL,
+--    option TEXT NOT NULL,
+--    is_valid BOOLEAN DEFAULT FALSE,
+--    is_active BOOLEAN DEFAULT TRUE,
+--    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--
+--    CONSTRAINT fk_option_question
+--        FOREIGN KEY (question_id)
+--        REFERENCES public.questions(id)
+--        ON DELETE CASCADE
+--);
+--
+--CREATE TABLE IF NOT EXISTS public.question_ouvertes (
+--    id BIGSERIAL PRIMARY KEY,
+--    question_id BIGINT NOT NULL,
+--    title TEXT NOT NULL,
+--    file_content TEXT,
+--    is_active BOOLEAN DEFAULT TRUE,
+--    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--
+--    CONSTRAINT fk_question_ouverte
+--        FOREIGN KEY (question_id)
+--        REFERENCES public.questions(id)
+--        ON DELETE CASCADE
+--);
+--
+--CREATE TABLE IF NOT EXISTS public.question_case_studys (
+--    id BIGSERIAL PRIMARY KEY,
+--    question_id BIGINT NOT NULL,
+--    title TEXT NOT NULL,
+--    file_content TEXT,
+--    is_active BOOLEAN DEFAULT TRUE,
+--    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--
+--    CONSTRAINT fk_case_study_question
+--        FOREIGN KEY (question_id)
+--        REFERENCES public.questions(id)
+--        ON DELETE CASCADE
+--);
