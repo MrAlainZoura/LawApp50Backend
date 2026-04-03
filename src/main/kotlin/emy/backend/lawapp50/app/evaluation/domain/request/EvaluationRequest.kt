@@ -1,6 +1,7 @@
 package emy.backend.lawapp50.app.evaluation.domain.request
 
 import emy.backend.lawapp50.app.evaluation.domain.model.Evaluation
+import emy.backend.lawapp50.app.evaluation.domain.model.QuestionOption
 import org.jetbrains.annotations.NotNull
 import java.time.LocalDate
 
@@ -14,9 +15,23 @@ data class EvaluationRequest(
     val startDate: LocalDate,
     @NotNull
     val endDate: LocalDate,
-    val questionOption : Map<QuestionRequest,List<QuestionOptionRequest>>?,
-    val questionOuverte : Map<QuestionRequest,List<QuestionOuverteRequest>>?,
-    val questionCaseStudy : Map<QuestionRequest,List<QuestionCaseStudyRequest>>?
+    val option : List<QuestionOptionRequestDAO>? = emptyList(),
+    val ouverte : List<QuestionOuverteRequestDAO>? = emptyList(),
+    val caseStudy : List<QuestionCaseStudyRequestDAO>? = emptyList(),
+)
+
+data class QuestionOptionRequestDAO(
+    val question :QuestionRequest,
+    val questionOption : List<QuestionOptionRequest>?
+)
+data class QuestionOuverteRequestDAO(
+    val question :QuestionRequest,
+    val questionOuverte : List<QuestionOuverteRequest>?
+)
+
+data class QuestionCaseStudyRequestDAO(
+    val question :QuestionRequest,
+    val questionCaseStudy : List<QuestionCaseStudyRequest>?
 )
 
 fun EvaluationRequest.toDomain(userId : Long) = Evaluation(
