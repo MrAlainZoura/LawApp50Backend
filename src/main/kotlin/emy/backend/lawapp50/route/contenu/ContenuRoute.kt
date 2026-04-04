@@ -48,6 +48,24 @@ object LikeScope{
     const val PRIVATE = "${GlobalRoute.PRIVATE}/${FeaturContenu.LIKE}"
 }
 
+object ScopeContenuScope{
+    const val PUBLIC = "${GlobalRoute.PUBLIC}/${FeaturContenu.SCOPECONTENU}"
+    const val PROTECTED = "${GlobalRoute.PROTECT}/${FeaturContenu.SCOPECONTENU}"
+    const val PRIVATE = "${GlobalRoute.PRIVATE}/${FeaturContenu.SCOPECONTENU}"
+}
+
+object ScopeScope{
+    const val PUBLIC = "${GlobalRoute.PUBLIC}/${FeaturContenu.SCOPE}"
+    const val PROTECTED = "${GlobalRoute.PROTECT}/${FeaturContenu.SCOPE}"
+    const val PRIVATE = "${GlobalRoute.PRIVATE}/${FeaturContenu.SCOPE}"
+}
+
+object TypeContenuScope{
+    const val PUBLIC = "${GlobalRoute.PUBLIC}/${FeaturContenu.TYPECONTENU}"
+    const val PROTECTED = "${GlobalRoute.PROTECT}/${FeaturContenu.TYPECONTENU}"
+    const val PRIVATE = "${GlobalRoute.PRIVATE}/${FeaturContenu.TYPECONTENU}"
+}
+
 
 object FeaturContenu{
     const val CONTENU = "contenu"
@@ -58,4 +76,7 @@ object FeaturContenu{
     const val RESPONSECOM = "response"
     const val FAVORI = "favori"
     const val LIKE = "like"
+    const val SCOPE = "scope"
+    const val SCOPECONTENU = "scope-contenu"
+    const val TYPECONTENU = "type-contenu"
 }
